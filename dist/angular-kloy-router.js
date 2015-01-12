@@ -14,7 +14,7 @@ ng.module('kloy.router', []).
   provider('kloyRouter', require('./router')).
   provider('kloyLayoutManager', require('./layout-manager')).
   factory('kloyRoute', require('./route')).
-  directive('srRoute', require('./route-directive')).
+  directive('krRoute', require('./route-directive')).
   run(/*@ngInject*/["kloyLayoutManager", "$rootScope", "KLOY_ROUTER_EVENTS", function (
     kloyLayoutManager, $rootScope, KLOY_ROUTER_EVENTS
   ) {
@@ -155,7 +155,7 @@ var routeDirective = /*@ngInject*/["$log", "kloyRouter", "$compile", "$rootScope
     return el[0].tagName.toUpperCase() === 'A';
   };
 
-  $rootScope.srToRoute = function (routeName, routeParams) {
+  $rootScope.krToRoute = function (routeName, routeParams) {
 
     kloyRouter.toRoute(routeName, routeParams);
   };
@@ -166,8 +166,8 @@ var routeDirective = /*@ngInject*/["$log", "kloyRouter", "$compile", "$rootScope
 
     update = function () {
 
-      routeName = $parse(attrs.srRoute)(scope);
-      routeParams = attrs.srParams ? $parse(attrs.srParams)(scope) : undefined;
+      routeName = $parse(attrs.krRoute)(scope);
+      routeParams = attrs.krParams ? $parse(attrs.krParams)(scope) : undefined;
       path = kloyRouter.getPathFor(routeName, routeParams);
 
       if (isAnchor(el)) {
@@ -175,8 +175,8 @@ var routeDirective = /*@ngInject*/["$log", "kloyRouter", "$compile", "$rootScope
       }
     };
 
-    scope.$watch(attrs.srRoute, update);
-    scope.$watch(attrs.srParams, update);
+    scope.$watch(attrs.krRoute, update);
+    scope.$watch(attrs.krParams, update);
 
     el.on('click', function () {
 
